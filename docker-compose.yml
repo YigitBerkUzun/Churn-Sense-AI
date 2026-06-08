@@ -1,0 +1,43 @@
+# ChurnGuard AI — full stack: FastAPI backend + Streamlit dashboard.
+# Start everything with:  docker compose up --build
+#
+# The models/, data/ and reports/ folders are mounted so that artifacts trained
+# on the host (python -m src.train_model) are available inside the containers,
+# and both services share them.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: churnguard-api
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: churnguard-dashboard
+    command: >
+      streamlit run app/Home.py
+      --server.port=8501
+      --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./reports:/app/reports
+    depends_on:
+      - api

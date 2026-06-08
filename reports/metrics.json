@@ -1,0 +1,65 @@
+{
+  "dataset": "BigML Telecom Churn",
+  "production_model": "XGBoost",
+  "pipeline_steps": [
+    "features",
+    "preprocess",
+    "model"
+  ],
+  "n_train": 2666,
+  "n_test": 667,
+  "n_features": 83,
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 0.7826,
+      "precision": 0.3684,
+      "recall": 0.7368,
+      "f1": 0.4912,
+      "roc_auc": 0.8358,
+      "confusion_matrix": [
+        [
+          452,
+          120
+        ],
+        [
+          25,
+          70
+        ]
+      ]
+    },
+    "Random Forest": {
+      "accuracy": 0.9775,
+      "precision": 1.0,
+      "recall": 0.8421,
+      "f1": 0.9143,
+      "roc_auc": 0.9232,
+      "confusion_matrix": [
+        [
+          572,
+          0
+        ],
+        [
+          15,
+          80
+        ]
+      ]
+    },
+    "XGBoost": {
+      "accuracy": 0.979,
+      "precision": 0.9765,
+      "recall": 0.8737,
+      "f1": 0.9222,
+      "roc_auc": 0.9234,
+      "confusion_matrix": [
+        [
+          570,
+          2
+        ],
+        [
+          12,
+          83
+        ]
+      ]
+    }
+  }
+}
